@@ -1,4 +1,6 @@
-const express= require('express')
-const port= 4000;
+const express = require("express");
+const router = require("./controller/controller");
+const port = 4000;
 const app = express();
-app.listen(port,()=>console.log(`server is running on port ${port}`));
+app.use("/users", router);
+app.listen(port, () => console.log(`server is running on port ${port}`));
