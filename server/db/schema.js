@@ -8,9 +8,9 @@ const schema=new Schema({
     experience:{type:String,required:true},
     email:{type:String,required:true},
     salary:{type:String},
-    phone:{type: string, match: /^[0-9]{10}$/},
-    joiningDate:{type:Date, required:true},
+    phone:{type:String, match: /^[0-9]{10}$/},
+    joiningDate:{type : String, required:true},
     previousCompany:{type:String}
      
 })
-module.exports=mongoose.model("User",schema)
+module.exports=mongoose.model("employee_details",schema)

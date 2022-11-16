@@ -1,6 +1,8 @@
-const newUser = async (req, res) => {
-  const data = "hitting the new user route";
-  return data;
+const repository=require('../repository/repository')
+const newUser = async (req) => {
+  //const data = "hitting the new user route";
+  //return data;
+  return repository.createUser(req)
 };
 const updateUser = async (req, res) => {
   const data = "hitting the update user route";
@@ -12,9 +14,10 @@ const deleteUser = async (req, res) => {
   return data;
 };
 
-const getUser = async (req, res) => {
-  const data = "hitting the get user route";
-  return data;
+const getUser = async (userId) => {
+//  const data = "hitting the get user route";
+  //return data;
+  return repository.getUserData(userId);
 };
 
 const getAllUser = async (req, res) => {
