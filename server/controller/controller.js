@@ -16,8 +16,16 @@ router.post("/newUser", async (req, res) => {
   }
 });
 router.post("/updateData", async (req, res) => {
-  const data = await service.updateUser();
-  return res.status(200).send(data);
+  try {
+    //console.log(req.body);
+    //const { userId } = req.body;
+    //console.log(userId);
+    const data = req.body;
+    const result = await service.updateUser(data);
+    return res.status(200).send(result);
+  } catch (e) {
+    return res.status(400).send({ error: e });
+  }
 });
 router.post("/userData", async (req, res) => {
   try {
@@ -33,12 +41,21 @@ router.post("/userData", async (req, res) => {
   }
 });
 router.get("/getAll", async (req, res) => {
-  const data = await service.getAllUser();
-  return res.status(200).send(data);
+  try {
+    const data = await service.getAllUser();
+    return res.status(200).send(data);
+  } catch (e) {
+    return res.status(400).send({ error: e });
+  }
 });
-router.delete("/userId", async (req, res) => {
-  const data = await service.deleteUser();
-  return res.status(200).send(data);
+router.post("/deleteUser", async (req, res) => {
+  try {
+    const { userId } = req.body;
+    const data = await service.deleteUser(userId);
+    return res.status(200).send(data);
+  } catch (e) {
+    return res.status(400).send({ error: e });
+  }
 });
 
 module.exports = router;
