@@ -51,6 +51,7 @@ router.get("/getAll", async (req, res) => {
 router.post("/deleteUser", async (req, res) => {
   try {
     const { userId } = req.body;
+    console.log("delete",userId)
     const data = await service.deleteUser(userId);
     return res.status(200).send(data);
   } catch (e) {

@@ -10,4 +10,17 @@ export const getAllUser=async()=>{
     catch(error){
         return <h1>Data not found</h1>
     }
+  }
+    export const deleteUser=async(userId)=>{
+      try{
+        console.log(userId)
+    const {data}= await axios.post(`${baseURL}/deleteUser`, {body:{userId:[userId]}},{headers: {
+      "Content-Type": "application/x-www-form-urlencoded"}
+  })
+    console.log(data)
+    return data;
+      }
+      catch(error){
+          return <h1>Data not found</h1>
+      }
 }

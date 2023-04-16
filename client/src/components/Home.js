@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react'
-import {getAllUser} from './api/Index'
+import {getAllUser,deleteUser} from './api/Index'
 
 // const dummyData=[{
 //    // _id: "6374b4f0a68ab1c3425edd2c",
@@ -39,6 +39,14 @@ const getAllUserData=async()=>{
    console.log(data);
    setData(data);
 }
+
+const deleteUserData=async(userId)=>{
+    const data =await deleteUser(userId);
+     console.log(data);
+     getAllUserData();
+  }
+
+
 useEffect(()=>{
   getAllUserData();
   console.log("data");
@@ -118,9 +126,9 @@ useEffect(()=>{
                     <th>Action</th>
                 </thead>
                 <tbody>
-                    { data && data.map((res,_id)=>(
-                        <tr key={_id}>
-   <td>{res._id}</td>                         
+                    { data && data.map((res,index)=>(
+                        <tr key={index}>
+   <td>{index+1}</td>                         
 <td>{res.name}</td>
 <td>{res.role}</td>
 <td>{res.designation}</td>
@@ -132,8 +140,8 @@ useEffect(()=>{
 <td>{res.joiningDate}</td>
 <td>{res.previousCompany}</td>
 <td>
-    <input type="button" value="Edit"></input>
-    <input type="button" value="Delete"></input>
+    <input type="button" value="Edit" ></input>
+    <input type="button" value="Delete" onClick={()=>deleteUserData(res._id)}></input>
 </td>
                         </tr>
                     ))}
