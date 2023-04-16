@@ -1,5 +1,5 @@
-import {useEffect, useState} from 'react'
-import {getAllUser,deleteUser} from './api/Index'
+import { useEffect, useState } from "react";
+import { getAllUser, deleteUser, createUser } from "./api/Index";
 
 // const dummyData=[{
 //    // _id: "6374b4f0a68ab1c3425edd2c",
@@ -15,139 +15,196 @@ import {getAllUser,deleteUser} from './api/Index'
 // previousCompany: "Not Applicable"
 // }]
 
-const initialState=[{
-    // _id: "6374b4f0a68ab1c3425edd2c",
- name: "",
- role: "",
- designation: "",
- project: "",
- experience: "",
- email: "",
- salary: "",
- phone: "",
- joiningDate: "",
- previousCompany: ""
- }]
+const initialState = {
+  // _id: "6374b4f0a68ab1c3425edd2c",
+  name: "",
+  role: "",
+  designation: "",
+  project: "",
+  experience: "",
+  email: "",
+  salary: "",
+  phone: "",
+  joiningDate: "",
+  previousCompany: "",
+};
 
+export const Home = () => {
+  const [data, setData] = useState([initialState]);
+  const [newData, setNewData] = useState(initialState);
 
-export const Home=()=>{
+  const getAllUserData = async () => {
+    const data = await getAllUser();
+    console.log(data);
+    setData(data);
+  };
 
-const [data,setData]=useState(initialState);
+  const deleteUserData = async (userId) => {
+    const data = await deleteUser(userId);
+    console.log(data);
+    getAllUserData();
+  };
 
-const getAllUserData=async()=>{
-  const data =await getAllUser();
-   console.log(data);
-   setData(data);
-}
+  useEffect(() => {
+    getAllUserData();
+    console.log("data");
+  }, []);
 
-const deleteUserData=async(userId)=>{
-    const data =await deleteUser(userId);
-     console.log(data);
-     getAllUserData();
-  }
+  const onChangeHandler = (event) => {
+    console.log(event.target.value);
+    setNewData({
+      ...newData,
+      [event.target.name]: event.target.value,
+    });
+  };
 
+  const submit = async () => {
+    const response = await createUser(newData);
+    setNewData(response.data);
+    console.log(response);
+    alert(response.data._message);
+  };
 
-useEffect(()=>{
-  getAllUserData();
-  console.log("data");
-},[]);
-
-    return(
-        <div>
-            <h4>Please fill the below Employee Details</h4>
-            Name = 
-            <input type="text">
-            </input>
-            <br></br>
-            <br></br>
-            Role = 
-            <input type= "text">
-            </input>
-            <br></br>
-            <br></br>
-            Designation = 
-            <input type= "text">
-            </input>
-            <br></br>
-            <br></br>
-            Project = 
-            <input type="text">
-            </input>
-            <br></br>
-            <br></br>
-            Experience = 
-            <input type="text">
-            </input>
-            <br></br>
-            <br></br>
-            Email Id = 
-            <input type="text">
-            </input>
-            <br></br>
-            <br></br>
-            Salary = 
-            <input type = "text">
-            </input>
-            <br></br>
-            <br></br>
-            Phone No. = 
-            <input type="text">
-            </input>
-            <br></br>
-            <br></br>
-            Joining Date = 
-            <input type="text">
-            </input>
-            <br></br>
-            <br></br>
-            Previous Company = 
-            <input type = "text">
-            </input>
-            <br></br>
-            <br></br>
-            <input type ="button" value="Submit">
-            </input>
-            <br></br>
-            <br></br>
-            <h4>Employee Data Records</h4>
-            <table>
-                <thead>
-                    <th>Id</th>
-                    <th>Name</th>
-                    <th>Role</th>
-                    <th>Designation</th>
-                    <th>Project</th>
-                    <th>Experience</th>
-                    <th>Email</th>
-                    <th>Salary</th>
-                    <th>Phone</th>
-                    <th>Joining Date</th>
-                    <th>Previous Company</th>
-                    <th>Action</th>
-                </thead>
-                <tbody>
-                    { data && data.map((res,index)=>(
-                        <tr key={index}>
-   <td>{index+1}</td>                         
-<td>{res.name}</td>
-<td>{res.role}</td>
-<td>{res.designation}</td>
-<td>{res.project}</td>
-<td>{res.experience}</td>
-<td>{res.email}</td>
-<td>{res.salary}</td>
-<td>{res.phone}</td>
-<td>{res.joiningDate}</td>
-<td>{res.previousCompany}</td>
-<td>
-    <input type="button" value="Edit" ></input>
-    <input type="button" value="Delete" onClick={()=>deleteUserData(res._id)}></input>
-</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-            {/* <div>
+  return (
+    <div>
+      <h4>Please fill the below Employee Details</h4>
+      Name =
+      <input
+        type='text'
+        value={newData.name}
+        onChange={onChangeHandler}
+        name='name'
+      ></input>
+      <br></br>
+      <br></br>
+      Role =
+      <input
+        type='text'
+        value={newData.role}
+        onChange={onChangeHandler}
+        name='role'
+      ></input>
+      <br></br>
+      <br></br>
+      Designation =
+      <input
+        type='text'
+        value={newData.designation}
+        onChange={onChangeHandler}
+        name='designation'
+      ></input>
+      <br></br>
+      <br></br>
+      Project =
+      <input
+        type='text'
+        value={newData.project}
+        onChange={onChangeHandler}
+        name='project'
+      ></input>
+      <br></br>
+      <br></br>
+      Experience =
+      <input
+        type='text'
+        value={newData.experience}
+        onChange={onChangeHandler}
+        name='experience'
+      ></input>
+      <br></br>
+      <br></br>
+      Email Id =
+      <input
+        type='text'
+        value={newData.email}
+        onChange={onChangeHandler}
+        name='email'
+      ></input>
+      <br></br>
+      <br></br>
+      Salary =
+      <input
+        type='text'
+        value={newData.salary}
+        onChange={onChangeHandler}
+        name='salary'
+      ></input>
+      <br></br>
+      <br></br>
+      Phone No. =
+      <input
+        type='text'
+        value={newData.phone}
+        onChange={onChangeHandler}
+        name='phone'
+      ></input>
+      <br></br>
+      <br></br>
+      Joining Date =
+      <input
+        type='text'
+        value={newData.joiningDate}
+        onChange={onChangeHandler}
+        name='joiningDate'
+      ></input>
+      <br></br>
+      <br></br>
+      Previous Company =
+      <input
+        type='text'
+        value={newData.previousCompany}
+        onChange={onChangeHandler}
+        name='previousCompany'
+      ></input>
+      <br></br>
+      <br></br>
+      <input type='button' value='Submit' onClick={submit}></input>
+      <br></br>
+      <br></br>
+      <h4>Employee Data Records</h4>
+      <table>
+        <thead>
+          <th>Id</th>
+          <th>Name</th>
+          <th>Role</th>
+          <th>Designation</th>
+          <th>Project</th>
+          <th>Experience</th>
+          <th>Email</th>
+          <th>Salary</th>
+          <th>Phone</th>
+          <th>Joining Date</th>
+          <th>Previous Company</th>
+          <th>Action</th>
+        </thead>
+        <tbody>
+          {data &&
+            data.map((res, index) => (
+              <tr key={index}>
+                <td>{index + 1}</td>
+                <td>{res.name}</td>
+                <td>{res.role}</td>
+                <td>{res.designation}</td>
+                <td>{res.project}</td>
+                <td>{res.experience}</td>
+                <td>{res.email}</td>
+                <td>{res.salary}</td>
+                <td>{res.phone}</td>
+                <td>{res.joiningDate}</td>
+                <td>{res.previousCompany}</td>
+                <td>
+                  <input type='button' value='Edit'></input>
+                  <input
+                    type='button'
+                    value='Delete'
+                    onClick={() => deleteUserData(res._id)}
+                  ></input>
+                </td>
+              </tr>
+            ))}
+        </tbody>
+      </table>
+      {/* <div>
             {dummyData.map((res)=>(
                 <div>
             <div>{res.name}</div>
@@ -162,6 +219,6 @@ useEffect(()=>{
             
             )}
             </div> */}
-        </div>
-    )
-        }
+    </div>
+  );
+};

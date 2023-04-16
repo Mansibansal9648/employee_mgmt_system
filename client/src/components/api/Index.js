@@ -26,6 +26,24 @@ export const deleteUser = async (userId) => {
     console.log(data);
     return data;
   } catch (error) {
-    return <h1>Data not found</h1>;
+    alert(error);
+    return [];
+  }
+};
+
+export const createUser = async (body) => {
+  try {
+    console.log(body);
+    const response = await axios.post(`${baseURL}/newUser`, body, {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    });
+    console.log("response", response);
+    return response;
+  } catch (error) {
+    console.log(error);
+    alert(error);
+    return [];
   }
 };
