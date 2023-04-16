@@ -1,26 +1,31 @@
-import axios from 'axios'
-const baseURL = "http://localhost:4000/users"
+import axios from "axios";
+const baseURL = "http://localhost:4000/users";
 
-export const getAllUser=async()=>{
-    try{
-  const {data}= await axios.get(`${baseURL}/getAll`)
-  //console.log(data)
-  return data;
-    }
-    catch(error){
-        return <h1>Data not found</h1>
-    }
-  }
-    export const deleteUser=async(userId)=>{
-      try{
-        console.log(userId)
-    const {data}= await axios.post(`${baseURL}/deleteUser`, {body:{userId:[userId]}},{headers: {
-      "Content-Type": "application/x-www-form-urlencoded"}
-  })
-    console.log(data)
+export const getAllUser = async () => {
+  try {
+    const { data } = await axios.get(`${baseURL}/getAll`);
+    //console.log(data)
     return data;
+  } catch (error) {
+    return <h1>Data not found</h1>;
+  }
+};
+
+export const deleteUser = async (userId) => {
+  try {
+    console.log(userId);
+    const { data } = await axios.post(
+      `${baseURL}/deleteUser`,
+      { userId: userId },
+      {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
       }
-      catch(error){
-          return <h1>Data not found</h1>
-      }
-}
+    );
+    console.log(data);
+    return data;
+  } catch (error) {
+    return <h1>Data not found</h1>;
+  }
+};
