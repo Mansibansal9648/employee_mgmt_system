@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react'
-import {getAllUser,deleteUser} from './api/Index'
+import {getAllUser,deleteUser,newUser} from './api/Index'
 
 // const dummyData=[{
 //    // _id: "6374b4f0a68ab1c3425edd2c",
@@ -15,7 +15,7 @@ import {getAllUser,deleteUser} from './api/Index'
 // previousCompany: "Not Applicable"
 // }]
 
-const initialState=[{
+const initialState={
     // _id: "6374b4f0a68ab1c3425edd2c",
  name: "",
  role: "",
@@ -27,12 +27,23 @@ const initialState=[{
  phone: "",
  joiningDate: "",
  previousCompany: ""
- }]
+ }
 
 
 export const Home=()=>{
 
-const [data,setData]=useState(initialState);
+const [data,setData]=useState([initialState]);
+
+const [newData,setNewData]=useState(initialState)
+
+const onChangeHandler=(event)=>{
+  setNewData({...newData,[event.target.name]:event.target.value})  
+}
+
+const submitData=()=>{
+console.log(newData)
+newUserData(newData);
+}
 
 const getAllUserData=async()=>{
   const data =await getAllUser();
@@ -47,6 +58,14 @@ const deleteUserData=async(userId)=>{
   }
 
 
+  const newUserData=async(body)=>{
+    const data =await newUser(body);
+     console.log(data);
+     getAllUserData();
+  }
+
+
+
 useEffect(()=>{
   getAllUserData();
   console.log("data");
@@ -56,56 +75,56 @@ useEffect(()=>{
         <div>
             <h4>Please fill the below Employee Details</h4>
             Name = 
-            <input type="text">
+            <input type="text" value={newData.name} onChange={onChangeHandler} name="name">
             </input>
             <br></br>
             <br></br>
             Role = 
-            <input type= "text">
+            <input type="text" value={newData.role} onChange={onChangeHandler} name="role">
             </input>
             <br></br>
             <br></br>
             Designation = 
-            <input type= "text">
+            <input type="text" value={newData.designation} onChange={onChangeHandler} name="designation">
             </input>
             <br></br>
             <br></br>
             Project = 
-            <input type="text">
+            <input type="text" value={newData.project} onChange={onChangeHandler} name="project">
             </input>
             <br></br>
             <br></br>
             Experience = 
-            <input type="text">
+            <input type="text" value={newData.experience} onChange={onChangeHandler} name="experience">
             </input>
             <br></br>
             <br></br>
             Email Id = 
-            <input type="text">
+            <input type="text" value={newData.email} onChange={onChangeHandler} name="email">
             </input>
             <br></br>
             <br></br>
             Salary = 
-            <input type = "text">
+            <input type ="text" value={newData.salary} onChange={onChangeHandler} name="salary">
             </input>
             <br></br>
             <br></br>
             Phone No. = 
-            <input type="text">
+            <input type="text" value={newData.phone} onChange={onChangeHandler} name="phone">
             </input>
             <br></br>
             <br></br>
             Joining Date = 
-            <input type="text">
+            <input type="text" value={newData.joiningDate} onChange={onChangeHandler} name="joiningDate">
             </input>
             <br></br>
             <br></br>
             Previous Company = 
-            <input type = "text">
+            <input type ="text" value={newData.previousCompany} onChange={onChangeHandler} name="previousCompany">
             </input>
             <br></br>
             <br></br>
-            <input type ="button" value="Submit">
+            <input type ="button" value="Submit" onClick={()=>submitData()}>
             </input>
             <br></br>
             <br></br>

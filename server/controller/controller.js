@@ -9,6 +9,7 @@ const service = require("../service/service");
 router.post("/newUser", async (req, res) => {
   try {
     const body = req.body;
+    //console.log(body);
     const result = await service.newUser(body);
     return res.status(200).send(result);
   } catch (e) {
@@ -51,7 +52,7 @@ router.get("/getAll", async (req, res) => {
 router.post("/deleteUser", async (req, res) => {
   try {
     const { userId } = req.body;
-    console.log("delete",userId)
+   // console.log("delete",userId)
     const data = await service.deleteUser(userId);
     return res.status(200).send(data);
   } catch (e) {

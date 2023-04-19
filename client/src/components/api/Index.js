@@ -29,3 +29,25 @@ export const deleteUser = async (userId) => {
     return <h1>Data not found</h1>;
   }
 };
+
+
+  export const newUser = async (body) => {
+    try {
+      console.log(body);
+      const { data } = await axios.post(
+        `${baseURL}/newUser`,
+        body,
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }
+      );
+      console.log(data);
+      return data;
+    } catch (error) {
+      return <h1>Data not found</h1>;
+    }
+
+
+};
