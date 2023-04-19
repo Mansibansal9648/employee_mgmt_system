@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+
 const schema = new Schema({
   name: { type: String, required: true },
   role: { type: String, required: true },
@@ -12,4 +13,5 @@ const schema = new Schema({
   joiningDate: { type: String, required: true },
   previousCompany: { type: String },
 });
+
 module.exports = mongoose.model("employee_details", schema);

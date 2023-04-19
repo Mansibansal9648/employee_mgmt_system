@@ -13,6 +13,7 @@ router.post("/newUser", async (req, res) => {
     return res.status(400).send({ error: message ?? "some error occurred" });
   }
 });
+
 router.post("/updateData", async (req, res) => {
   try {
     const { body } = req;
@@ -24,6 +25,7 @@ router.post("/updateData", async (req, res) => {
     return res.status(400).send({ error: message ?? "some error occurred" });
   }
 });
+
 router.post("/userData", async (req, res) => {
   try {
     const { userId } = req.body;
@@ -35,9 +37,11 @@ router.post("/userData", async (req, res) => {
     return res.status(400).send({ error: message ?? "some error occurred" });
   }
 });
+
 router.get("/getAll", async (req, res) => {
   try {
     const result = await service.getAllUser();
+    console.log(result.message);
     if (result?.errors) return res.status(400).send(result);
     return res.status(200).send(result);
   } catch (e) {
