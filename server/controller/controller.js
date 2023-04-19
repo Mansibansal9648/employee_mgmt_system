@@ -1,61 +1,59 @@
 const express = require("express");
 const router = express();
 const service = require("../service/service");
-// const createUser=async(req,res)=>{
-//   const data=await service.newUser();
-//     return res.status(200).send(data);
-// }
-// router.post('/newUser',createUser)
+
 router.post("/newUser", async (req, res) => {
   try {
-    const body = req.body;
+    const { body } = req;
     const result = await service.newUser(body);
+    if (result?.errors) return res.status(400).send(result);
     return res.status(200).send(result);
   } catch (e) {
-    return res.status(400).send({ error: e });
+    const { message } = e;
+    return res.status(400).send({ error: message ?? "some error occurred" });
   }
 });
 router.post("/updateData", async (req, res) => {
   try {
-    //console.log(req.body);
-    //const { userId } = req.body;
-    //console.log(userId);
-    const data = req.body;
-    const result = await service.updateUser(data);
+    const { body } = req;
+    const result = await service.updateUser(body);
+    if (result?.errors) return res.status(400).send(result);
     return res.status(200).send(result);
   } catch (e) {
-    return res.status(400).send({ error: e });
+    const { message } = e;
+    return res.status(400).send({ error: message ?? "some error occurred" });
   }
 });
 router.post("/userData", async (req, res) => {
   try {
-    // console.log(req)
     const { userId } = req.body;
-    // const userId='6374b4f0a68ab1c3425edd2c';
-    // console.log(userId)
-    const data = await service.getUser(userId);
-    console.log(data);
-    return res.status(200).send(data);
+    const result = await service.getUser(userId);
+    if (result?.errors) return res.status(400).send(result);
+    return res.status(200).send(result);
   } catch (e) {
-    return res.status(400).send({ error: e });
+    const { message } = e;
+    return res.status(400).send({ error: message ?? "some error occurred" });
   }
 });
 router.get("/getAll", async (req, res) => {
   try {
-    const data = await service.getAllUser();
-    return res.status(200).send(data);
+    const result = await service.getAllUser();
+    if (result?.errors) return res.status(400).send(result);
+    return res.status(200).send(result);
   } catch (e) {
-    return res.status(400).send({ error: e });
+    return res.status(400).send({ error: message ?? "some error occurred" });
   }
 });
+
 router.post("/deleteUser", async (req, res) => {
   try {
     const { userId } = req.body;
-    console.log("delete",userId)
-    const data = await service.deleteUser(userId);
-    return res.status(200).send(data);
+    const result = await service.deleteUser(userId);
+    if (result?.errors) return res.status(400).send(result);
+    return res.status(200).send(result);
   } catch (e) {
-    return res.status(400).send({ error: e });
+    const { message } = e;
+    return res.status(400).send({ error: message ?? "some error occurred" });
   }
 });
 
