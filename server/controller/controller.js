@@ -28,7 +28,6 @@ router.post("/userData", async (req, res) => {
   try {
     const { userId } = req.body;
     const result = await service.getUser(userId);
-    if (result?.errors) return res.status(400).send(result);
     return res.status(200).send(result);
   } catch (e) {
     const { message } = e;
@@ -49,7 +48,6 @@ router.post("/deleteUser", async (req, res) => {
   try {
     const { userId } = req.body;
     const result = await service.deleteUser(userId);
-    if (result?.errors) return res.status(400).send(result);
     return res.status(200).send(result);
   } catch (e) {
     const { message } = e;

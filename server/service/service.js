@@ -15,13 +15,18 @@ const updateUser = async (body) => {
 
 const deleteUser = async (userId) => {
   if (!userId) throw new Error(`user id is ${userId}`);
-  return repository.deleteUserData(userId);
+  const result = repository.deleteUserData(userId);
+  if (result?.errors) throw new Error(result?.errors);
+  return result;
 };
 
 const getUser = async (userId) => {
   if (!userId) throw new Error(`user id is ${userId}`);
   const result = await repository.getUserData(userId);
-  if (!result.length) throw new Error(`No result found for user id ${userId}`);
+  if (result.errors) {
+    throw new Error(result.errors);
+  } else if (!result.length)
+    throw new Error(`No result found for user id ${userId}`);
   return result;
 };
 

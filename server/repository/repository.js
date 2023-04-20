@@ -18,6 +18,7 @@ const getUserData = async (userId) => {
     });
     return newUser;
   } catch (e) {
+    console.log(e);
     return { errors: e.message };
   }
 };
