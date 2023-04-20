@@ -13,7 +13,7 @@ const createUser = async (body) => {
 
 const getUserData = async (userId) => {
   try {
-    const newUser = await User.findOne({
+    const newUser = await User.find({
       _id: ObjectId(userId),
     });
     return newUser;
@@ -39,7 +39,7 @@ const updateUserData = async (body) => {
 
 const deleteUserData = async (userId) => {
   try {
-    const deleteUser = await User.findByIdAndDelete({
+    const deleteUser = await User.deleteOne({
       _id: ObjectId(userId),
     });
     return deleteUser;
@@ -51,7 +51,6 @@ const deleteUserData = async (userId) => {
 const getAllUserData = async () => {
   try {
     const getAllUser = await User.find();
-    res.name;
     return getAllUser;
   } catch (e) {
     return { errors: e.message };

@@ -6,7 +6,6 @@ router.post("/newUser", async (req, res) => {
   try {
     const { body } = req;
     const result = await service.newUser(body);
-    if (result?.errors) return res.status(400).send(result);
     return res.status(200).send(result);
   } catch (e) {
     const { message } = e;
@@ -18,7 +17,6 @@ router.post("/updateData", async (req, res) => {
   try {
     const { body } = req;
     const result = await service.updateUser(body);
-    if (result?.errors) return res.status(400).send(result);
     return res.status(200).send(result);
   } catch (e) {
     const { message } = e;
@@ -41,8 +39,6 @@ router.post("/userData", async (req, res) => {
 router.get("/getAll", async (req, res) => {
   try {
     const result = await service.getAllUser();
-    console.log(result.message);
-    if (result?.errors) return res.status(400).send(result);
     return res.status(200).send(result);
   } catch (e) {
     return res.status(400).send({ error: message ?? "some error occurred" });
