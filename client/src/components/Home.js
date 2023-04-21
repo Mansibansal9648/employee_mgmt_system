@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react'
-import {getAllUser,deleteUser,newUser} from './api/Index'
+import {getAllUser,deleteUser,newUser, updateUser} from './api/Index'
 
 // const dummyData=[{
 //    // _id: "6374b4f0a68ab1c3425edd2c",
@@ -16,7 +16,7 @@ import {getAllUser,deleteUser,newUser} from './api/Index'
 // }]
 
 const initialState={
-    // _id: "6374b4f0a68ab1c3425edd2c",
+ userId: "",
  name: "",
  role: "",
  designation: "",
@@ -42,7 +42,15 @@ const onChangeHandler=(event)=>{
 
 const submitData=()=>{
 console.log(newData)
-newUserData(newData);
+
+if(!newData.userId){
+    newUserData(newData);
+}
+else{
+    updateUser(newData)
+}
+getAllUserData();
+setNewData(initialState)
 }
 
 const getAllUserData=async()=>{
@@ -61,10 +69,26 @@ const deleteUserData=async(userId)=>{
   const newUserData=async(body)=>{
     const data =await newUser(body);
      console.log(data);
-     getAllUserData();
+    //  getAllUserData();
   }
 
-
+const updateUserData=(body)=>{
+    console.log(body);
+    setNewData({
+        userId: body._id,
+        name: body.name,
+        role: body.role,
+        designation: body.designation,
+        project: body.project,
+        experience: body.experience,
+        email: body.email,
+        salary: body.salary,
+        phone: body.phone,
+        joiningDate: body.joiningDate,
+        previousCompany: body.previousCompany
+        });
+  //  updateUser(body);
+}
 
 useEffect(()=>{
   getAllUserData();
@@ -159,7 +183,7 @@ useEffect(()=>{
 <td>{res.joiningDate}</td>
 <td>{res.previousCompany}</td>
 <td>
-    <input type="button" value="Edit" ></input>
+    <input type="button" value="Edit" onClick={()=>updateUserData(res)}></input>
     <input type="button" value="Delete" onClick={()=>deleteUserData(res._id)}></input>
 </td>
                         </tr>
