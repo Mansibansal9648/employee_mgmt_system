@@ -40,14 +40,14 @@ const onChangeHandler=(event)=>{
   setNewData({...newData,[event.target.name]:event.target.value})  
 }
 
-const submitData=()=>{
+const submitData= async ()=>{
 console.log(newData)
 
 if(!newData.userId){
-    newUserData(newData);
+    await newUserData(newData);
 }
 else{
-    updateUser(newData)
+    await updateUser(newData)
 }
 getAllUserData();
 setNewData(initialState)
