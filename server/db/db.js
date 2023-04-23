@@ -20,4 +20,4 @@ const database = async () => {
     console.log("Can not connect to database");
   }
 };
-module.exports = { database, url};
+module.exports = { database, url };
