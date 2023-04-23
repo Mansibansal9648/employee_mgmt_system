@@ -1,8 +1,10 @@
 const mongoose = require("mongoose");
-const url =
-  "mongodb+srv://MonaDev:Mona123@cluster0.01rixba.mongodb.net/employee_mgmt_system?retryWrites=true&w=majority";
+console.log(process.env.DB_URL)
+const url =process.env.DB_URL
+ // "mongodb+srv://MonaDev:Mona123@cluster0.01rixba.mongodb.net/employee_mgmt_system?retryWrites=true&w=majority";
 const database = async () => {
   try {
+    console.log(typeof(process.env.DB_URL))
     await mongoose.connect(
       url,
       // {
