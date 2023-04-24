@@ -1,11 +1,9 @@
 const mongoose = require("mongoose");
-console.log(process.env.DB_URL)
-const url =process.env.DB_URL
- // "mongodb+srv://MonaDev:Mona123@cluster0.01rixba.mongodb.net/employee_mgmt_system?retryWrites=true&w=majority";
+
 const database = async () => {
+  const url = process.env.DB_URL;
   try {
-    console.log(typeof(process.env.DB_URL))
-    await mongoose.connect(
+    mongoose.connect(
       url,
       // {
       //  useNewUrlParser:true,
@@ -20,4 +18,4 @@ const database = async () => {
     console.log("Can not connect to database");
   }
 };
-module.exports = { database, url };
+module.exports = { database };
